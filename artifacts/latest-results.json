@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "generated_on": "2026-07-30",
+  "data": {
+    "provider": "Massive",
+    "price_endpoint": "/v2/aggs/ticker/{ticker}/range/1/day/2021-08-02/2026-07-30",
+    "dividend_endpoint": "/stocks/v1/dividends",
+    "adjusted_for_splits": true,
+    "cash_dividends_reinvested": true,
+    "available_start": "2021-08-02",
+    "term_start": "2025-01-21",
+    "term_end": "2026-07-30",
+    "term_trading_sessions": 383,
+    "universe": [
+      "SPY",
+      "QQQ",
+      "IWM",
+      "DIA",
+      "XLB",
+      "XLE",
+      "XLF",
+      "XLI",
+      "XLK",
+      "XLP",
+      "XLU",
+      "XLV",
+      "XLY",
+      "KRE",
+      "IYT",
+      "XME",
+      "ITA",
+      "SMH",
+      "GLD",
+      "GDX",
+      "SLV",
+      "DBA",
+      "COPX",
+      "URA",
+      "UUP",
+      "EFA",
+      "EEM",
+      "VNQ",
+      "HYG",
+      "TLT",
+      "IEF",
+      "SHY",
+      "BIL"
+    ]
+  },
+  "assumptions": {
+    "benchmark": "SPY total return",
+    "causal_execution": "signal through the prior close; position effective at the next close",
+    "transaction_cost_bps_per_one_way_turnover": 5,
+    "taxes_included": false,
+    "leverage": 1.0,
+    "shorting": false
+  },
+  "benchmark": {
+    "formula": "buy and hold SPY",
+    "total_return": 0.2503012621538996,
+    "cagr": 0.15836690392516228,
+    "annual_volatility": 0.17712547733782516,
+    "max_drawdown": -0.1875538828742621,
+    "ending_wealth": 1.2503012621538996
+  },
+  "unconstrained_result": {
+    "mathematical_optimum": "unbounded when leverage or shorting is unrestricted",
+    "finite_comparison": "one-times long-only daily oracle over the declared ETF universe",
+    "formula": "at each close, hold the ETF with the highest next-session total return",
+    "no_cost": {
+      "total_return": 71755.29066632973,
+      "cagr": 1568.2091251742065,
+      "annual_volatility": 0.31656304825665144,
+      "max_drawdown": 0.0,
+      "ending_wealth": 71756.29066632973
+    },
+    "five_bps_per_switch": {
+      "total_return": 60443.925993460565,
+      "cagr": 1400.6890646672691,
+      "annual_volatility": 0.3166152398949623,
+      "max_drawdown": -0.00039060960928105626,
+      "ending_wealth": 60444.925993460565,
+      "switches": 343
+    },
+    "most_selected": {
+      "URA": 60,
+      "GDX": 48,
+      "SLV": 44,
+      "SMH": 34,
+      "COPX": 31,
+      "XLE": 29
+    }
+  },
+  "best_static_hindsight": {
+    "ticker": "SMH",
+    "total_return": 1.0601206362255668,
+    "ending_wealth": 2.0601206362255668
+  },
+  "causal_hindsight_champion": {
+    "formula": "every 10 sessions, hold the ETF with the highest 42-session total return when SPY is above its 200-session SMA; otherwise hold BIL",
+    "searched_candidates": 28800,
+    "total_return": 2.7457476040302278,
+    "cagr": 1.3847911096339471,
+    "annual_volatility": 0.5081636781175042,
+    "max_drawdown": -0.3714962121212122,
+    "ending_wealth": 3.7457476040302278,
+    "pre_term_total_return": 0.07424383352346275,
+    "current_holding": "XLV",
+    "current_holding_effective_date": "2026-07-28"
+  },
+  "continuation_candidate": {
+    "formula": "every 21 sessions, hold the ETF with the highest 12-to-1-month total-return momentum",
+    "score": "ln(TR[t-21] / TR[t-252])",
+    "searched_candidates": 7200,
+    "pre_term": {
+      "start": "2022-08-02",
+      "end": "2025-01-17",
+      "total_return": 0.7521485898253333,
+      "cagr": 0.255911850747945,
+      "annual_volatility": 0.31577111139756847,
+      "max_drawdown": -0.26333773441176955
+    },
+    "trump_term": {
+      "start": "2025-01-21",
+      "end": "2026-07-30",
+      "total_return": 0.35020589541213476,
+      "cagr": 0.21847689169898854,
+      "annual_volatility": 0.47973266342959053,
+      "max_drawdown": -0.5701877122338326
+    },
+    "current_holding": "SMH",
+    "current_holding_effective_date": "2026-07-24",
+    "current_signal_date": "2026-07-23",
+    "additional_sessions_until_rebalance": 17,
+    "freeze_until": "2029-01-19"
+  },
+  "limitations": [
+    "The fully unconstrained optimum has no finite maximum; the reported oracle adds a one-times long-only boundary solely to make a finite comparison.",
+    "The oracle uses future returns and cannot be traded.",
+    "The continuation candidate was selected after observing both evaluation periods and therefore is not genuinely out of sample.",
+    "The continuation candidate held one ETF at a time and suffered a 57.02% Trump-term drawdown.",
+    "Massive access supplied only five years of daily price history, limiting pre-term validation.",
+    "The fixed surviving ETF universe introduces survivorship and theme-selection bias."
+  ]
+}
