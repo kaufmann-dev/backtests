@@ -1,0 +1,61 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "trump-backtest"
+version = "0.1.0"
+description = "Deterministic market-strategy backtests for the current Trump administration"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+trump-backtest = "trump_backtest.cli:main"
+
+[project.optional-dependencies]
+dev = [
+    "pyright>=1.1.403",
+    "pytest>=8.4",
+    "ruff>=0.12",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/trump_backtest"]
+
+[tool.pytest.ini_options]
+addopts = [
+    "--strict-config",
+    "--strict-markers",
+    "-ra",
+]
+testpaths = ["tests"]
+xfail_strict = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+ignore = ["E501"]
+select = [
+    "B",
+    "E",
+    "F",
+    "I",
+    "RUF",
+    "UP",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["trump_backtest"]
+
+[tool.pyright]
+include = ["src", "tests"]
+extraPaths = ["src"]
+pythonVersion = "3.12"
+typeCheckingMode = "strict"
+venv = ".venv"
+venvPath = "."
